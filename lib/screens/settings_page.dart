@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../controllers/LanguageScreenController.dart';
+import '../utils/NativeAdWidget.dart';
 import '../widgets/LanguagePickerDialog.dart';
 import '../utils/constants.dart';
 import 'notification_screen.dart';
@@ -561,8 +562,11 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: screenHeight * 0.03),
-
+          SizedBox(height: screenHeight * 0.02),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal:screenWidth*0.04 ),
+            child: const NativeAdWidget(isThisAdShow: true,),
+          ),
           // Support
           _buildSettingsContainer(
             screenWidth: screenWidth,

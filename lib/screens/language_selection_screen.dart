@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/LanguageScreenController.dart';
 import '../utils/Common.dart';
+import '../utils/NativeAdWidget.dart';
 import '../utils/constants.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
@@ -195,33 +196,38 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               color: Colors.white,
               // padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 12),
               padding: EdgeInsets.fromLTRB(20, 12, 20, bottomPadding),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    // await controller.saveLanguageSelection();
-                    // Get.offAllNamed('/premium', arguments: {'fromNamed': true});
-                    Get.offAllNamed('/main');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: screenHeight * 0.017,
+              child: Column(
+                children: [
+                  const NativeAdWidget(isThisAdShow: true,),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        // await controller.saveLanguageSelection();
+                        // Get.offAllNamed('/premium', arguments: {'fromNamed': true});
+                        Get.offAllNamed('/main');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.017,
+                        ),
+                      ),
+                      child: Text(
+                        "Continue",
+                        style: GoogleFonts.manrope(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                  child: Text(
-                    "Continue",
-                    style: GoogleFonts.manrope(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
             SizedBox(height: 15),

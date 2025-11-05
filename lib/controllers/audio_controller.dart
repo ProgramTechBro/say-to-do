@@ -18,7 +18,6 @@ import '../services/database_helper.dart';
 import '../utils/NoInternet.dart';
 import '../utils/constants.dart';
 import 'package:flutter/widgets.dart';
-
 import 'LanguageScreenController.dart';
 
 class AudioController extends GetxController {
@@ -243,7 +242,7 @@ class AudioController extends GetxController {
     );
     final apiKey = AppConstants.apiKey;
     final endpoint =
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey';
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey';
     final prompt = '''
 You are a task extraction assistant. Carefully listen to this audio and extract task objects in the following language only:
 
@@ -431,7 +430,7 @@ Each task must follow this format:
       'The Selected Language code is ${controller.selectedLanguage['code']}',
     );
     final apiKey = AppConstants.apiKey;
-    final modelName = 'gemini-2.0-flash'; 
+    final modelName = 'gemini-2.5-flash';
     final endpoint =
         'https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent?key=$apiKey';
     final prompt = '''

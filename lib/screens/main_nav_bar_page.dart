@@ -323,10 +323,12 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:double_tap_to_exit/double_tap_to_exit.dart';
 import '../controllers/MainNavBarController.dart';
+import '../main.dart';
 import '../utils/constants.dart';
 import '../widgets/AnalyzingOverlay.dart';
 import '../widgets/VoiceRecordingOverlay.dart';
@@ -399,25 +401,36 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
         },
         child: Obx(() => Stack(
           children: [
-            Scaffold(
-              backgroundColor: Color(0xFFF5F5F5),
-              extendBody: true,
-              body: SafeArea(
-                child: Stack(
-                  children: [
-                    pages[controller.selectedIndex.value],
-                    if (controller.selectedIndex.value == 0)
-                      _ExpandableFab(controller: controller, screenWidth: screenWidth, screenHeight: screenHeight),
-                  ],
+            FGBGNotifier(
+              onEvent: (event) {
+                if (event == FGBGType.foreground) {
+                  ///Will Uncomment When Remote Config
+                  // if (AdCheckService.isAdShowToUser.value &&
+                  //     ConsentService.canShowAds.value) {
+                    loadAppOpenAd();
+                  }
+                //}
+              },
+              child: Scaffold(
+                backgroundColor: Color(0xFFF5F5F5),
+                extendBody: true,
+                body: SafeArea(
+                  child: Stack(
+                    children: [
+                      pages[controller.selectedIndex.value],
+                      if (controller.selectedIndex.value == 0)
+                        _ExpandableFab(controller: controller, screenWidth: screenWidth, screenHeight: screenHeight),
+                    ],
+                  ),
                 ),
-              ),
-              bottomNavigationBar: SafeArea(
-                child: Container(
-                  height: screenHeight*0.08,
-                  child: _CustomBottomNavBar(
-                    controller: controller,
-                    screenWidth: screenWidth,
-                    screenHeight: screenHeight,
+                bottomNavigationBar: SafeArea(
+                  child: Container(
+                    height: screenHeight*0.08,
+                    child: _CustomBottomNavBar(
+                      controller: controller,
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                    ),
                   ),
                 ),
               ),

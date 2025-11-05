@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../models/task.dart';
+import '../services/AdService.dart';
 import '../services/database_helper.dart';
 import '../utils/CalenderView.dart';
+import '../utils/NativeAdWidget.dart';
 import '../widgets/task_tile.dart';
 import '../utils/constants.dart';
 import 'package:confetti/confetti.dart';
@@ -24,6 +26,7 @@ class _CalendarPageState extends State<CalendarPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper();
   late ConfettiController _confettiController;
   bool _showCelebration = false;
+  final AdService adService = Get.find<AdService>();
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _CalendarPageState extends State<CalendarPage> {
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 1),
     );
+    adService.loadCalendarScreenBannerAd();
     _loadTasksForDate(_selectedDate);
   }
 
@@ -245,7 +249,15 @@ class _CalendarPageState extends State<CalendarPage> {
                 // ),
                 // const SizedBox(height: 8),
                  //_buildCalendarBar(),
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
+                //
+                Obx(() {
+                  return adService.showBannerAd(
+                    adService.isBannerAdLoaded.value,
+                    adService.bannerAdForEditing,
+                  );
+                }),
+                const SizedBox(height: 10),
                 Text(
                   'Tasks for ${DateFormat('MMMM d').format(_selectedDate)}',
                   style: const TextStyle(

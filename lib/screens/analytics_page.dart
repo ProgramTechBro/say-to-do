@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../services/AdService.dart';
 import '../services/database_helper.dart';
 import '../models/task.dart';
+import '../utils/NativeAdWidget.dart';
 import '../utils/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +29,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   List<Task> _tasks = [];
   int _selectedTab = 0; // 0: Week, 1: Month, 2: Year
   bool _isLoading = true;
+  final AdService adService = Get.find<AdService>();
 
   // --- Recent Activity State ---
   List<Activity> _recentActivities = [];
@@ -34,6 +37,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   @override
   void initState() {
     super.initState();
+    adService.loadAnalyticsScreenBannerAd();
     _loadTasks();
     _loadRecentActivities();
     _checkAndRecordMissedTasks();
@@ -352,7 +356,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 24),
+                          SizedBox(height: 12),
+                          Obx(() {
+                            return adService.showBannerAd(
+                              adService.isBannerAnalyticAdLoaded.value,
+                              adService.bannerAdForFraming,
+                            );
+                          }),
+                          SizedBox(height: 12),
                           _buildCompletionRateChart(context),
                           SizedBox(height: 24),
                           _buildTaskDistributionChart(context),

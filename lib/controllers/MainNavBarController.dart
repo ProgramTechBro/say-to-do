@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../Enum/RepeatFlag.dart';
 import '../screens/FreehandImageCropper.dart';
+import '../services/AdService.dart';
 import '../services/database_helper.dart';
 import '../services/notification_service.dart';
 import '../controllers/audio_controller.dart';
@@ -25,6 +26,7 @@ class MainNavBarController extends GetxController with WidgetsBindingObserver {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final NotificationService notificationService = NotificationService();
   bool isAnyCameraTaskAdded = false;
+  final AdService adService = Get.find<AdService>();
 
   @override
   void onInit() {
@@ -105,6 +107,8 @@ class MainNavBarController extends GetxController with WidgetsBindingObserver {
       final homeController = Get.find<HomeController>();
       await homeController.loadTasks();
       homeController.showSuccessFlushBar('Task added successfully');
+      await Future.delayed(const Duration(seconds: 3));
+      adService.showInterstitialAd();
     }
   }
 
@@ -226,6 +230,8 @@ class MainNavBarController extends GetxController with WidgetsBindingObserver {
         final homeController = Get.find<HomeController>();
         await homeController.loadTasks();
         homeController.showSuccessFlushBar('Task added successfully');
+        await Future.delayed(const Duration(seconds: 3));
+        adService.showInterstitialAd();
       }
     } catch (e) {
       BotToast.showText(text: 'An error occurred: $e');

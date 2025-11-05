@@ -1,12 +1,24 @@
+import 'package:first_project/screens/premium_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'PremiumController.dart';
 
 class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
     navigateNext();
+    // initPremiumTasks();
   }
+
+  // Future<void> initPremiumTasks() async {
+  //   await Future.wait([
+  //     PremiumController.to.initSubscription(),
+  //     PremiumController.to.restorePurchases(false),
+  //     PremiumController.to.checkSubscriptionStatus(),
+  //   ]);
+  // }
 
   Future<void> navigateNext() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -21,6 +33,12 @@ class SplashController extends GetxController {
     } else {
       // Get.offAllNamed('/premium', arguments: {'fromNamed': true});
       Get.offAllNamed('/main');
+      // if(PremiumController.to.isValidSubscription()){
+      //   Get.offAllNamed('/main');
+      // }
+      // else{
+      //   Get.off(() => PremiumView(showSkip: true,));
+      // }
     }
   }
 }
