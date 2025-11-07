@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../main.dart';
 import '../services/AdService.dart';
 
 class OnboardingController extends GetxController {
   final RxInt currentPage = 0.obs;
+  late final AdService adService;
   final List<Map<String, String>> pages = [
     {
       'image': 'assets/icons/onboarding_1.png',
@@ -28,11 +30,14 @@ class OnboardingController extends GetxController {
     //   'subtitle': 'Tasks 100; Stress 0, Success 100, You made my day.',
     // },
   ];
-  final adService = Get.find<AdService>();
   @override
   void onInit() {
     super.onInit();
     _markOnboardingSeen();
+    _initializeData();
+  }
+  Future<void> _initializeData() async {
+    adService = Get.find<AdService>();
   }
 
   Future<void> _markOnboardingSeen() async {

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:confetti/confetti.dart';
 import '../controllers/HomeController.dart';
+import '../services/remote_config.dart';
 import '../utils/constants.dart';
+import '../widgets/RemoteconfigErrorDialog.dart';
 import '../widgets/task_tile.dart';
 import 'dart:math';
 
@@ -16,6 +18,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final HomeController controller = Get.put(HomeController());
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (RemoteKeysService.geminiApiKey.isEmpty) {
+        showRemoteConfigErrorDialog();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;

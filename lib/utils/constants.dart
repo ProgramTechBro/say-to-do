@@ -143,8 +143,6 @@ class AppConstants {
   static const Duration longAnimationDuration = Duration(milliseconds: 800);
 
   // Gemini API settings
-  // static const String apiKey = 'AIzaSyB6UQMdFsMez-4BiWOtepcwA6AiQGsI-Qw';
-  static const String apiKey='AIzaSyA4R6FamZ29S0ZBEs85WIX9dATgmzCG650';
   static const String modelName = 'gemini-1.5-flash-latest';
 
   //Privacy Policy and Terms and Condition

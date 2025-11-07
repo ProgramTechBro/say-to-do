@@ -1,15 +1,19 @@
-import 'package:first_project/services/AdCheckService.dart';
+import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:first_project/services/AdService.dart';
 import 'package:first_project/services/Consent_Services.dart';
 import 'package:first_project/services/dio_Service.dart';
+import 'package:first_project/services/remote_config.dart';
 import 'package:first_project/utils/AdHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'controllers/LanguageScreenController.dart';
-import 'controllers/PremiumController.dart';
+import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'utils/constants.dart';
@@ -44,15 +48,22 @@ Future<void> loadAppOpenAd({
     );
   }
 //}
+//late Completer<void> remoteConfigReady;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  //remoteConfigReady = Completer<void>();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+  await GetStorage.init();
   DioService();
+  await RemoteKeysService.initialize();
   // Get.put<AdCheckService>(AdCheckService(), permanent: true);
   // Get.put(PremiumController(), permanent: true);
   await NotificationService().init();

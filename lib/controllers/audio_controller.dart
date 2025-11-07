@@ -5,6 +5,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:first_project/services/dio_Service.dart';
 import 'package:first_project/services/notification_service.dart';
+import 'package:first_project/services/remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recorder/flutter_recorder.dart';
@@ -236,11 +237,15 @@ class AudioController extends GetxController {
       errorMessage = 'No internet connection. Please connect and try again.';
       return [];
     }
+    final apiKey = RemoteKeysService.geminiApiKey;
+    if(apiKey.isEmpty){
+      errorMessage = 'Api Key Missing — Please check your internet or restart the app.';
+      return [];
+    }
     print('The Selected Language is  ${controller.selectedLanguage['title']}');
     print(
       'The Selected Language code is ${controller.selectedLanguage['code']}',
     );
-    final apiKey = AppConstants.apiKey;
     final endpoint =
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey';
     final prompt = '''
@@ -425,11 +430,15 @@ Each task must follow this format:
       errorImageMessage = 'No internet connection. Please connect and try again.';
       return [];
     }
+    final apiKey = RemoteKeysService.geminiApiKey;
+    if(apiKey.isEmpty){
+      errorImageMessage = 'Api Key Missing — Please check your internet or restart the app.';
+      return [];
+    }
     print('The Selected Language is   ${controller.selectedLanguage['title']}');
     print(
       'The Selected Language code is ${controller.selectedLanguage['code']}',
     );
-    final apiKey = AppConstants.apiKey;
     final modelName = 'gemini-2.5-flash';
     final endpoint =
         'https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent?key=$apiKey';
